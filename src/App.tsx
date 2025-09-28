@@ -2,10 +2,21 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { useReducer } from 'react';
+
+const reducer = (state: { count: number }, action: { type: 'increment' | 'decrement' }) => {
+  if (action.type === 'increment') {
+    return { count: state.count + 1 };
+  } else if (action.type === 'decrement') {
+    return { count: state.count - 1 };
+  }
+  return { count: state.count + 1 };
+}
+
 
 function App() {
   const [count, setCount] = useState(0)
-
+  const [state, dispatch] = useReducer(reducer, { count: 0 })
   return (
     <>
       <div>
@@ -28,6 +39,9 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <button onClick={() => dispatch({ type: 'increment' })}>Increment</button>
+      <button onClick={() => dispatch({ type: 'decrement' })}>Decrement</button>
+      <p>Count2: {state.count}</p>
     </>
   )
 }
