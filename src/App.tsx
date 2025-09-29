@@ -3,6 +3,16 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { useReducer } from 'react';
+import { ErrorBoundary } from "react-error-boundary";
+
+const ErrorComponent = (props: { shouldThrow: boolean }) => {
+  if(props.shouldThrow) {
+
+    throw new Error('Error in ErrorComponent');
+  }
+  return <p>No error</p>;
+}
+
 
 const reducer = (state: { count: number }, action: { type: 'increment' | 'decrement' }) => {
   if (action.type === 'increment') {
@@ -42,6 +52,10 @@ function App() {
       <button onClick={() => dispatch({ type: 'increment' })}>Increment</button>
       <button onClick={() => dispatch({ type: 'decrement' })}>Decrement</button>
       <p>Count2: {state.count}</p>
+
+      <ErrorBoundary fallback={<p>Error</p>}>
+        <ErrorComponent shouldThrow={true} />
+      </ErrorBoundary>
     </>
   )
 }
