@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { useReducer } from 'react';
 import { ErrorBoundary } from "react-error-boundary";
+import { PowerSupplyArea } from './types';
 
 const ErrorComponent = (props: { shouldThrow: boolean }) => {
   if(props.shouldThrow) {
@@ -24,9 +25,24 @@ const reducer = (state: { count: number }, action: { type: 'increment' | 'decrem
 }
 
 
+
 function App() {
   const [count, setCount] = useState(0)
   const [state, dispatch] = useReducer(reducer, { count: 0 })
+  const areas = PowerSupplyArea.TOHOKU_EPCO & ~PowerSupplyArea.TEPCO
+  const filter = (areas: number) => {
+    console.log('areas', areas);
+    
+    console.log('&', areas & PowerSupplyArea.TOHOKU_EPCO);
+    
+    console.log(areas & PowerSupplyArea.TOHOKU_EPCO);
+    
+    if(areas & PowerSupplyArea.TOHOKU_EPCO) {
+      console.log('tepco');
+      
+    }
+  }
+  filter(areas)  
   return (
     <>
       <div>
